@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#include <hpx/contracts.hpp>
 #include <hpx/assert.hpp>
 #include <hpx/modules/async_base.hpp>
 #include <hpx/modules/components.hpp>

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#include <hpx/contracts.hpp>
 
 #include <stdexcept>
 #include <utility>

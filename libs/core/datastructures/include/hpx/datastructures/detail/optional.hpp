@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#include <hpx/contracts.hpp>
 #include <hpx/modules/type_support.hpp>
 
 #include <cstddef>
@@ -237,28 +238,34 @@ namespace hpx::optional_ns {
 
         ///////////////////////////////////////////////////////////////////////
         constexpr T const* operator->() const noexcept
+          HPX_PRE(this->has_value())
         {
             return reinterpret_cast<T const*>(&storage_);
         }
 
         T* operator->() noexcept
+          HPX_PRE(this->has_value())
         {
             return reinterpret_cast<T*>(&storage_);
         }
 
         constexpr T const& operator*() const& noexcept
+          HPX_PRE(this->has_value())
         {
             return *reinterpret_cast<T const*>(&storage_);
         }
         T& operator*() & noexcept
+          HPX_PRE(this->has_value())
         {
             return *reinterpret_cast<T*>(&storage_);
         }
         T&& operator*() && noexcept
+          HPX_PRE(this->has_value())
         {
             return HPX_MOVE(*reinterpret_cast<T*>(&storage_));
         }
         T const&& operator*() const&& noexcept
+          HPX_PRE(this->has_value())
         {
             return HPX_MOVE(*reinterpret_cast<T*>(&storage_));
         }
