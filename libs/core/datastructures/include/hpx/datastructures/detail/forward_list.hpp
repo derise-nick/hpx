@@ -52,6 +52,7 @@ namespace hpx::detail {
 
         // Return reference to the first element
         T& front()
+            HPX_PRE(!this->empty())
         {
             if (!head_)
             {
@@ -62,6 +63,7 @@ namespace hpx::detail {
         }
 
         T const& front() const
+            HPX_PRE(!this->empty())
         {
             if (!head_)
             {
@@ -88,6 +90,7 @@ namespace hpx::detail {
 
         // Remove first element
         void pop_front()
+            HPX_PRE(!this->empty())
         {
             if (!head_)
             {

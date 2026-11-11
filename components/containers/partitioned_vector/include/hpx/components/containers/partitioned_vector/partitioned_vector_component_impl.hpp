@@ -224,6 +224,7 @@ namespace hpx::server {
     template <typename T, typename Data>
     HPX_PARTITIONED_VECTOR_SPECIALIZATION_EXPORT T
     partitioned_vector<T, Data>::front() const
+      HPX_PRE(!this->empty())
     {
         return partitioned_vector_partition_.front();
     }
@@ -231,6 +232,7 @@ namespace hpx::server {
     template <typename T, typename Data>
     HPX_PARTITIONED_VECTOR_SPECIALIZATION_EXPORT T
     partitioned_vector<T, Data>::back() const
+      HPX_PRE(!this->empty())
     {
         return partitioned_vector_partition_.back();
     }
@@ -253,6 +255,7 @@ namespace hpx::server {
     template <typename T, typename Data>
     HPX_PARTITIONED_VECTOR_SPECIALIZATION_EXPORT void
     partitioned_vector<T, Data>::pop_back()
+      HPX_PRE(!this->empty())
     {
         partitioned_vector_partition_.pop_back();
     }

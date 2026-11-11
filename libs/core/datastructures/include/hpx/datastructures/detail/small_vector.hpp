@@ -469,6 +469,7 @@ namespace hpx::detail {
 
         template <direction D>
         void pop_back() noexcept
+          HPX_PRE(!this->empty())
         {
             if constexpr (std::is_trivially_destructible_v<T>)
             {
@@ -1095,6 +1096,7 @@ namespace hpx::detail {
         }
 
         void pop_back()
+          HPX_PRE(!this->empty())
         {
             if (is_direct())
             {

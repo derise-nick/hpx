@@ -504,6 +504,7 @@ namespace hpx {
         ///         this proxy instance is used.
         ///
         segmented::detail::vector_value_proxy<T, Data> operator[](size_type pos)
+          HPX_PRE(pos < size())
         {
             return segmented::detail::vector_value_proxy<T, Data>(*this, pos);
         }
@@ -520,6 +521,7 @@ namespace hpx {
         ///       element but a copy of its value.
         ///
         T operator[](size_type pos) const
+          HPX_PRE(pos < size())
         {
             return get_value(launch::sync, pos);
         }
