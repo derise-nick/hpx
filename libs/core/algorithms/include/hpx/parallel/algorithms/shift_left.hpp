@@ -50,7 +50,8 @@ namespace hpx {
     ///           Otherwise returns \a first + ((last - first) - n).
     ///
     template <typename FwdIter, typename Size>
-    FwdIter shift_left(FwdIter first, FwdIter last, Size n);
+    FwdIter shift_left(FwdIter first, FwdIter last, Size n)
+      HPX_PRE(n >= 0);
 
     ///////////////////////////////////////////////////////////////////////////
     /// Shifts the elements in the range [first, last) by n positions towards
@@ -105,7 +106,8 @@ namespace hpx {
     ///
     template <typename ExPolicy, typename FwdIter, typename Size>
     typename hpx::parallel::util::detail::algorithm_result<ExPolicy, FwdIter>
-    shift_left(ExPolicy&& policy, FwdIter first, FwdIter last, Size n);
+    shift_left(ExPolicy&& policy, FwdIter first, FwdIter last, Size n)
+      HPX_PRE(n >= 0);
 
     // clang-format on
 }    // namespace hpx
@@ -113,6 +115,7 @@ namespace hpx {
 #else    // DOXYGEN
 
 #include <hpx/config.hpp>
+#include <hpx/contracts.hpp>
 #include <hpx/modules/async_local.hpp>
 #include <hpx/modules/concepts.hpp>
 #include <hpx/modules/execution.hpp>
@@ -289,6 +292,7 @@ namespace hpx {
             )
         // clang-format on
         static FwdIter invoke_default(FwdIter first, FwdIter last, Size n)
+          HPX_PRE(n >= 0)
         {
             static_assert(std::forward_iterator<FwdIter>,
                 "Requires at least forward iterator.");
@@ -307,6 +311,7 @@ namespace hpx {
         // clang-format on
         static decltype(auto) invoke_default(
             ExPolicy&& policy, FwdIter first, FwdIter last, Size n)
+            HPX_PRE(n >= 0)
         {
             static_assert(std::forward_iterator<FwdIter>,
                 "Requires at least forward iterator.");

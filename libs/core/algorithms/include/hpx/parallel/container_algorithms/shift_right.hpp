@@ -49,7 +49,8 @@ namespace hpx { namespace ranges {
     ///           end of the resulting range.
     ///
     template <typename FwdIter, typename Sent, typename Size>
-    FwdIter shift_right(FwdIter first, Sent last, Size n);
+    FwdIter shift_right(FwdIter first, Sent last, Size n)
+      HPX_PRE(n >= 0);
 
     ///////////////////////////////////////////////////////////////////////////
     /// Shifts the elements in the range [first, last) by n positions towards
@@ -104,7 +105,8 @@ namespace hpx { namespace ranges {
     template <typename ExPolicy, typename FwdIter, typename Sent,
         typename Size>
     hpx::parallel::util::detail::algorithm_result_t<ExPolicy, FwdIter>
-    shift_right(ExPolicy&& policy, FwdIter first, Sent last, Size n);
+    shift_right(ExPolicy&& policy, FwdIter first, Sent last, Size n)
+      HPX_PRE(n >= 0);
 
     ///////////////////////////////////////////////////////////////////////////
     /// Shifts the elements in the range [first, last) by n positions towards
@@ -137,7 +139,8 @@ namespace hpx { namespace ranges {
     ///           end of the resulting range.
     ///
     template <typename Rng, typename Size>
-    std::ranges::iterator_t<Rng> shift_right(Rng&& rng, Size n);
+    std::ranges::iterator_t<Rng> shift_right(Rng&& rng, Size n)
+      HPX_PRE(n >= 0);
 
     ///////////////////////////////////////////////////////////////////////////
     /// Shifts the elements in the range [first, last) by n positions towards
@@ -188,7 +191,8 @@ namespace hpx { namespace ranges {
     template <typename ExPolicy, typename Rng, typename Size>
     typename parallel::util::detail::algorithm_result<ExPolicy,
         std::ranges::iterator_t<Rng>>
-    shift_right(ExPolicy&& policy, Rng&& rng, Size n);
+    shift_right(ExPolicy&& policy, Rng&& rng, Size n)
+      HPX_PRE(n >= 0);
 
     // clang-format on
 }}    // namespace hpx::ranges
@@ -196,6 +200,7 @@ namespace hpx { namespace ranges {
 #else    // DOXYGEN
 
 #include <hpx/config.hpp>
+#include <hpx/contracts.hpp>
 #include <hpx/modules/concepts.hpp>
 #include <hpx/modules/iterator_support.hpp>
 #include <hpx/parallel/algorithms/detail/tag_dispatch.hpp>
@@ -222,6 +227,7 @@ namespace hpx::ranges {
             )
         // clang-format on
         static FwdIter invoke_default(FwdIter first, Sent last, Size n)
+          HPX_PRE(n >= 0)
         {
             static_assert(std::forward_iterator<FwdIter>,
                 "Requires at least forward iterator.");
@@ -243,6 +249,7 @@ namespace hpx::ranges {
         static hpx::parallel::util::detail::algorithm_result_t<ExPolicy,
             FwdIter>
         invoke_default(ExPolicy&& policy, FwdIter first, Sent last, Size n)
+          HPX_PRE(n >= 0)
         {
             static_assert(std::forward_iterator<FwdIter>,
                 "Requires at least forward iterator.");
@@ -259,6 +266,7 @@ namespace hpx::ranges {
             )
         // clang-format on
         static std::ranges::iterator_t<Rng> invoke_default(Rng&& rng, Size n)
+          HPX_PRE(n >= 0)
         {
             static_assert(std::forward_iterator<std::ranges::iterator_t<Rng>>,
                 "Requires at least forward iterator.");
@@ -279,6 +287,7 @@ namespace hpx::ranges {
         static parallel::util::detail::algorithm_result_t<ExPolicy,
             std::ranges::iterator_t<Rng>>
         invoke_default(ExPolicy&& policy, Rng&& rng, Size n)
+          HPX_PRE(n >= 0)
         {
             static_assert(std::forward_iterator<std::ranges::iterator_t<Rng>>,
                 "Requires at least forward iterator.");

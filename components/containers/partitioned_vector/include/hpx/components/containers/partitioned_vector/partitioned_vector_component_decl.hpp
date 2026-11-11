@@ -17,6 +17,7 @@
 /// classes are asynchronous API which return the futures.
 
 #include <hpx/config.hpp>
+#include <hpx/contracts.hpp>
 #include <hpx/modules/functional.hpp>
 #include <hpx/modules/actions.hpp>
 #include <hpx/modules/actions_base.hpp>
@@ -208,7 +209,7 @@ namespace hpx::server {
         /// \return Return the value of the first element in the
         ///         partitioned_vector_partition
         ///
-        T front() const;
+        T front() const HPX_PRE(!this->empty());
 
         /// Access the value of last element in the partitioned_vector_partition.
         ///
@@ -217,7 +218,7 @@ namespace hpx::server {
         /// \return Return the value of the last element in the
         ///         partitioned_vector_partition
         ///
-        T back() const;
+        T back() const HPX_PRE(!this->empty());
 
         ///////////////////////////////////////////////////////////////////////
         // Modifiers APIs in server class
@@ -241,7 +242,7 @@ namespace hpx::server {
         /// Remove the last element from partitioned_vector_partition effectively
         /// reducing the size by one. The removed element is destroyed.
         ///
-        void pop_back();
+        void pop_back() HPX_PRE(!this->empty());
 
         //  This API is required as we do not returning the reference to the
         //  element in Any API.
