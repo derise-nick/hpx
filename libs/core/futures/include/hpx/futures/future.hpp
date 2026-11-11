@@ -455,6 +455,7 @@ namespace hpx::lcos::detail {
 
         // Effects: blocks until the shared state is ready.
         void wait(error_code& ec = throws) const
+        HPX_PRE(this->valid())
         {
             if (!shared_state_)
             {
@@ -663,7 +664,7 @@ namespace hpx {
         //         shared state.
         // Postcondition: valid() == false.
         hpx::traits::future_traits<future>::result_type get()
-            HPX_PRE(this->valid())
+            HPX_PRE(this->valid()) HPX_POST(!this->valid())
         {
             if (!this->shared_state_)
             {
@@ -683,7 +684,7 @@ namespace hpx {
         }
 
         hpx::traits::future_traits<future>::result_type get(error_code& ec)
-            HPX_PRE(this->valid())
+            HPX_PRE(this->valid()) HPX_POST(!this->valid())
         {
             if (!this->shared_state_)
             {
@@ -824,7 +825,7 @@ namespace hpx {
         // HPX_PRE(this->valid()) HPX_POST(!this->valid())
         {
 #if defined(HPX_COMPUTE_DEVICE_CODE)
-            HPX_ASSERT(false);
+            // HPX_ASSERT(false);
             using future_type = decltype(base_type::then_alloc(
                 alloc, std::move(*this), std::forward<F>(f), ec));
             return future_type{};

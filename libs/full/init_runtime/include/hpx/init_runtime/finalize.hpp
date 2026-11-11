@@ -74,7 +74,8 @@ namespace hpx {
     /// Using this function is an alternative to \a hpx::disconnect, these
     /// functions do not need to be called both.
     HPX_CXX_EXPORT HPX_EXPORT int finalize(double shutdown_timeout,
-        double localwait = -1.0, hpx::error_code& ec = throws);
+        double localwait = -1.0, hpx::error_code& ec = throws)
+        HPX_POST(r: r == 0);
 
     /// \brief Main function to gracefully terminate the HPX runtime system.
     ///
@@ -106,6 +107,7 @@ namespace hpx {
     /// Using this function is an alternative to \a hpx::disconnect, these
     /// functions do not need to be called both.
     HPX_CXX_EXPORT inline int finalize(hpx::error_code& ec = throws)
+        HPX_POST(r: r == 0)
     {
         return finalize(-1.0, -1.0, ec);
     }
@@ -170,7 +172,8 @@ namespace hpx {
     /// called by any locality being disconnected.
     ///
     HPX_CXX_EXPORT HPX_EXPORT int disconnect(double shutdown_timeout,
-        double localwait = -1.0, hpx::error_code& ec = throws);
+        double localwait = -1.0, hpx::error_code& ec = throws)
+        HPX_POST(r: r == 0);
 
     /// \brief Disconnect this locality from the application.
     ///
@@ -196,6 +199,7 @@ namespace hpx {
     /// called by any locality being disconnected.
     ///
     HPX_CXX_EXPORT inline int disconnect(hpx::error_code& ec = throws)
+        HPX_POST(r: r == 0 || r == -1)
     {
         return disconnect(-1.0, -1.0, ec);
     }
@@ -235,7 +239,8 @@ namespace hpx {
     /// unreachable locality does not block the caller indefinitely.
     ///
     HPX_CXX_EXPORT HPX_EXPORT int force_disconnect(
-        hpx::id_type const& locality, hpx::error_code& ec = throws);
+        hpx::id_type const& locality, hpx::error_code& ec = throws)
+        HPX_POST(r: r == 0 || r == -1);
 #endif
 
     /// \brief Stop the runtime system

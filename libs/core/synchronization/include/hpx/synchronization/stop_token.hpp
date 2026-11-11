@@ -257,7 +257,9 @@ namespace hpx {
         //      false. [Note: Because the created stop_token object can never
         //      receive a stop request, no resources are allocated for a stop
         //      state]
-        constexpr stop_token() noexcept = default;
+        constexpr stop_token() noexcept
+          // HPX_POST(!this->stop_possible() && !this->stop_requested())
+          = default;
 
         stop_token(stop_token const& rhs) = default;
         stop_token(stop_token&&) noexcept = default;
@@ -378,15 +380,16 @@ namespace hpx {
         //
         // Throws: std::bad_alloc if memory could not be allocated for the stop
         //      state.
-        stop_source()
-          : state_(new detail::stop_state, false)
+        stop_source() HPX_POST(this->stop_possible() && !this->stop_requested())
+          : state_(new detail::stop_state, false) 
         {
             state_->add_source_count();
         }
 
         // Postconditions: stop_possible() is false and stop_requested() is
         //      false. [Note: No resources are allocated for the state.]
-        explicit stop_source(nostopstate_t) noexcept {}
+        explicit stop_source(nostopstate_t) noexcept 
+          HPX_POST(!this->stop_possible() && !this->stop_requested()) {}
 
         stop_source(stop_source const& rhs) noexcept
           : state_(rhs.state_)
@@ -465,6 +468,7 @@ namespace hpx {
         // Returns: true if this call made a stop request; otherwise false
         /// makes a stop request for the associated stop-state, if any
         bool request_stop() const noexcept
+          HPX_PRE(this->stop_possible()) HPX_POST(!this->stop_possible() || this->stop_requested())
         {
             return !!state_ && state_->request_stop();
         }
@@ -739,6 +743,7 @@ namespace hpx::p2300_stop_token {
         // Returns: true if this call made a stop request; otherwise false.
         //
         bool request_stop() noexcept
+          HPX_POST(!this->stop_possible() && this->stop_requested())
         {
             return state_.request_stop();
         }

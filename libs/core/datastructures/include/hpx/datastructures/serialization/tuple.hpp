@@ -117,6 +117,7 @@ namespace hpx::util::detail {
     {
         template <typename T>
         static void save_element(Archive& ar, T& t)
+          HPX_PRE(ar.is_saving())
         {
             if constexpr (!std::is_default_constructible_v<T>)
             {

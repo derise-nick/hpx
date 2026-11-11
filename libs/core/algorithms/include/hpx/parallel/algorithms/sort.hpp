@@ -69,7 +69,8 @@ namespace hpx {
     template <typename RandomIt,
         typename Comp = hpx::parallel::detail::less,
         typename Proj = hpx::identity>
-    void sort(RandomIt first, RandomIt last, Comp&& comp, Proj&& proj = Proj());
+    void sort(RandomIt first, RandomIt last, Comp&& comp, Proj&& proj = Proj()) 
+        HPX_PRE(first <= last);
 
     ///////////////////////////////////////////////////////////////////////////
     /// Sorts the elements in the range [first, last) in ascending order. The
