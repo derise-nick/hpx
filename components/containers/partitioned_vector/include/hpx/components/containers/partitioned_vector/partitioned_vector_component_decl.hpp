@@ -209,7 +209,7 @@ namespace hpx::server {
         /// \return Return the value of the first element in the
         ///         partitioned_vector_partition
         ///
-        T front() const HPX_PRE(!this->empty());
+        T front() const;
 
         /// Access the value of last element in the partitioned_vector_partition.
         ///
@@ -218,7 +218,7 @@ namespace hpx::server {
         /// \return Return the value of the last element in the
         ///         partitioned_vector_partition
         ///
-        T back() const HPX_PRE(!this->empty());
+        T back() const;
 
         ///////////////////////////////////////////////////////////////////////
         // Modifiers APIs in server class
